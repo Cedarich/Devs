@@ -79,7 +79,7 @@ const LocationCheckIn = () => {
 
             setTimeout(() => {
               window.location.href = `https://script.google.com/macros/s/AKfycbwRlfXX71ODCTwiCnuKFgZKOCmyg0c68UfXkgFNC59MxJT26e95-2BZ1-updBuSdzIduQ/exec?token=${token}`;
-            }, 2000);
+            }, 1000);
           } else {
             setCheckInStatus("error");
             setErrorMessage(
@@ -231,7 +231,7 @@ const LocationCheckIn = () => {
               : "Check-in Failed"
           }
           open={modalVisible}
-          onCancel={handleModalClose}
+          onCancel={handleModalClose} // Close on clicking close icon
           footer={null}
           style={{
             maxWidth: "90%",
@@ -243,13 +243,6 @@ const LocationCheckIn = () => {
             backdropFilter: "blur(12px)",
             boxShadow: "0 4px 30px rgba(0, 0, 0, 0.5)",
             animation: "fadeIn 0.4s ease-in-out, scaleIn 0.5s ease",
-          }}
-          styles={{
-            body: {
-              color: "#fff",
-              fontFamily: "'Orbitron', sans-serif",
-              fontSize: "1.1rem",
-            },
           }}
         >
           {checkInStatus === "success" && (
