@@ -233,12 +233,22 @@ const LocationCheckIn = () => {
           open={modalVisible}
           onCancel={handleModalClose}
           footer={null}
+          style={{
+            maxWidth: "90%",
+            width: "400px",
+            borderRadius: "12px",
+            padding: "20px",
+            background: "rgba(255, 255, 255, 0.1)",
+            border: "1px solid rgba(255, 255, 255, 0.2)",
+            backdropFilter: "blur(12px)",
+            boxShadow: "0 4px 30px rgba(0, 0, 0, 0.5)",
+            animation: "fadeIn 0.4s ease-in-out, scaleIn 0.5s ease",
+          }}
           styles={{
             body: {
-              background: "rgba(255, 255, 255, 0.1)",
-              borderRadius: "12px",
-              padding: "20px",
-              color: "white",
+              color: "#fff",
+              fontFamily: "'Orbitron', sans-serif",
+              fontSize: "1.1rem",
             },
           }}
         >
@@ -247,8 +257,16 @@ const LocationCheckIn = () => {
               message="Success"
               description="You have successfully checked in!"
               type="success"
-              icon={<CheckCircleOutlined />}
+              icon={<CheckCircleOutlined style={{ color: "#faac63" }} />}
               showIcon
+              style={{
+                backgroundColor: "transparent",
+                border: "none",
+                color: "#faac63",
+                textAlign: "center",
+                fontFamily: "'Poppins', sans-serif",
+                animation: "pulseGlow 2s infinite",
+              }}
             />
           )}
           {checkInStatus === "error" && (
@@ -256,10 +274,36 @@ const LocationCheckIn = () => {
               message="Error"
               description={errorMessage}
               type="error"
-              icon={<CloseCircleOutlined />}
+              icon={<CloseCircleOutlined style={{ color: "#ff5e5e" }} />}
               showIcon
+              style={{
+                backgroundColor: "transparent",
+                border: "none",
+                color: "#ff5e5e",
+                textAlign: "center",
+                fontFamily: "'Poppins', sans-serif",
+                animation: "pulseGlow 2s infinite",
+              }}
             />
           )}
+          <style>
+            {`
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      @keyframes scaleIn {
+        0% { transform: scale(0.8); }
+        100% { transform: scale(1); }
+      }
+
+      @keyframes pulseGlow {
+        0%, 100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.6), 0 0 10px rgba(255, 255, 255, 0.5); }
+        50% { text-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 25px rgba(255, 255, 255, 0.7); }
+      }
+    `}
+          </style>
         </Modal>
       </div>
     </div>
