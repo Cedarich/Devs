@@ -13,8 +13,8 @@ const LocationCheckIn = () => {
   const [checkInStatus, setCheckInStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const targetLocation = { lat: 10.504599, lng: 7.431029 };
-  const maxDistance = 900000;
+  const targetLocation = { lat: 6.5243793, lng: 3.3792057 }; // target location (latitude, longitude)
+  const maxDistance = 10000; // meters
 
   const generateToken = () => {
     return Math.random().toString(36).substr(2);
@@ -33,7 +33,7 @@ const LocationCheckIn = () => {
   };
 
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
-    const R = 6371e3;
+    const R = 6371e3; // Earth's radius in meters
     const φ1 = (lat1 * Math.PI) / 180;
     const φ2 = (lat2 * Math.PI) / 180;
     const Δφ = ((lat2 - lat1) * Math.PI) / 180;
@@ -44,7 +44,7 @@ const LocationCheckIn = () => {
       Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    return R * c;
+    return R * c; // in meters
   };
 
   const checkLocation = () => {
@@ -58,12 +58,19 @@ const LocationCheckIn = () => {
           const userLat = position.coords.latitude;
           const userLng = position.coords.longitude;
 
+          // Log current location for debugging
+          console.log("Current Location:", userLat, userLng);
+
+          // Calculate the distance from target location
           const distance = calculateDistance(
             userLat,
             userLng,
             targetLocation.lat,
             targetLocation.lng
           );
+
+          // Log calculated distance for debugging
+          console.log("Calculated Distance:", distance);
 
           if (distance <= maxDistance) {
             setCheckInStatus("success");
@@ -77,9 +84,14 @@ const LocationCheckIn = () => {
               storeTokenWithExpiration(token);
             }
 
+            // Inform user of success before redirection
+            setErrorMessage(
+              `You are within the allowed check-in area. Redirecting...`
+            );
+
             setTimeout(() => {
               window.location.href = `https://script.google.com/macros/s/AKfycbwRlfXX71ODCTwiCnuKFgZKOCmyg0c68UfXkgFNC59MxJT26e95-2BZ1-updBuSdzIduQ/exec?token=${token}`;
-            }, 1000);
+            }, 2000); // Delay before redirection (2 seconds for example)
           } else {
             setCheckInStatus("error");
             setErrorMessage(
@@ -101,28 +113,20 @@ const LocationCheckIn = () => {
   };
 
   const handleModalClose = () => {
-    setModalVisible(false);
-    setCheckInStatus(null);
-    setErrorMessage("");
+    if (checkInStatus === "error") {
+      window.location.reload(); // Refresh page if there's an error
+    } else {
+      setModalVisible(false); // Close modal if success
+      setCheckInStatus(null);
+      setErrorMessage("");
+    }
   };
 
   useEffect(() => {
     const style = document.createElement("style");
     style.innerHTML = `
-      @keyframes pulse {
-        0% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 255, 255, 0.6); }
-        50% { transform: scale(1.2); box-shadow: 0 0 20px rgba(255, 255, 255, 1); }
-        100% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 255, 255, 0.6); }
-      }
-
-      @keyframes glow {
-        0% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.6), 0 0 10px rgba(255, 255, 255, 0.5); }
-        50% { text-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 25px rgba(255, 255, 255, 0.7); }
-        100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.6), 0 0 10px rgba(255, 255, 255, 0.5); }
-      }
-
-      @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-      @keyframes typing { 0% { width: 0; } 100% { width: 100%; } }
+      @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 255, 255, 0.6); } 50% { transform: scale(1.2); box-shadow: 0 0 20px rgba(255, 255, 255, 1); } 100% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 255, 255, 0.6); } }
+      @keyframes glow { 0% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.6), 0 0 10px rgba(255, 255, 255, 0.5); } 50% { text-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 25px rgba(255, 255, 255, 0.7); } 100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.6), 0 0 10px rgba(255, 255, 255, 0.5); } }
     `;
     document.head.appendChild(style);
 
@@ -165,16 +169,10 @@ const LocationCheckIn = () => {
       >
         <Title
           level={2}
-          className="location-check-title"
           style={{
             fontFamily: "'Poppins', sans-serif",
             fontSize: "1.5rem",
             color: "#e2aaff",
-            overflow: "hidden",
-            paddingRight: "10px",
-            whiteSpace: "nowrap",
-            animation:
-              "typing 4s steps(30) 1s 1 normal, blink 0.75s step-end infinite",
             textShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
           }}
         >
@@ -210,15 +208,6 @@ const LocationCheckIn = () => {
             padding: "12px 30px",
             boxShadow: "0 0 10px rgba(250, 172, 99, 0.5)",
             transition: "all 0.3s ease",
-            animation: "pulse 4s ease-out infinite",
-          }}
-          onMouseEnter={(e) => {
-            e.target.style.transform = "scale(1.1)";
-            e.target.style.boxShadow = "0 0 25px rgba(250, 172, 99, 0.8)";
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.transform = "scale(1)";
-            e.target.style.boxShadow = "0 0 10px rgba(250, 172, 99, 0.5)";
           }}
         >
           Check In
@@ -231,72 +220,38 @@ const LocationCheckIn = () => {
               : "Check-in Failed"
           }
           open={modalVisible}
-          onCancel={handleModalClose} // Close on clicking close icon
-          footer={null}
-          style={{
-            maxWidth: "90%",
-            width: "400px",
-            borderRadius: "12px",
-            padding: "20px",
-            background: "rgba(255, 255, 255, 0.1)",
-            border: "1px solid rgba(255, 255, 255, 0.2)",
-            backdropFilter: "blur(12px)",
-            boxShadow: "0 4px 30px rgba(0, 0, 0, 0.5)",
-            animation: "fadeIn 0.4s ease-in-out, scaleIn 0.5s ease",
-          }}
+          onCancel={handleModalClose}
+          footer={[
+            <Button
+              key="back"
+              onClick={handleModalClose}
+              icon={
+                checkInStatus === "success" ? (
+                  <CheckCircleOutlined />
+                ) : (
+                  <CloseCircleOutlined />
+                )
+              }
+              style={{
+                backgroundColor:
+                  checkInStatus === "success" ? "#4CAF50" : "#f44336",
+                color: "white",
+                fontFamily: "'Poppins', sans-serif",
+              }}
+            >
+              {checkInStatus === "success" ? "Proceed" : "Try Again"}
+            </Button>,
+          ]}
         >
-          {checkInStatus === "success" && (
+          {checkInStatus === "success" ? (
             <Alert
-              message="Success"
-              description="You have successfully checked in!"
+              message="You have successfully checked in!"
               type="success"
-              icon={<CheckCircleOutlined style={{ color: "#faac63" }} />}
               showIcon
-              style={{
-                backgroundColor: "transparent",
-                border: "none",
-                color: "#faac63",
-                textAlign: "center",
-                fontFamily: "'Poppins', sans-serif",
-                animation: "pulseGlow 2s infinite",
-              }}
             />
+          ) : (
+            <Alert message={errorMessage} type="error" showIcon />
           )}
-          {checkInStatus === "error" && (
-            <Alert
-              message="Error"
-              description={errorMessage}
-              type="error"
-              icon={<CloseCircleOutlined style={{ color: "#ff5e5e" }} />}
-              showIcon
-              style={{
-                backgroundColor: "transparent",
-                border: "none",
-                color: "#ff5e5e",
-                textAlign: "center",
-                fontFamily: "'Poppins', sans-serif",
-                animation: "pulseGlow 2s infinite",
-              }}
-            />
-          )}
-          <style>
-            {`
-      @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-      }
-
-      @keyframes scaleIn {
-        0% { transform: scale(0.8); }
-        100% { transform: scale(1); }
-      }
-
-      @keyframes pulseGlow {
-        0%, 100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.6), 0 0 10px rgba(255, 255, 255, 0.5); }
-        50% { text-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 25px rgba(255, 255, 255, 0.7); }
-      }
-    `}
-          </style>
         </Modal>
       </div>
     </div>
