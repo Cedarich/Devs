@@ -13,8 +13,8 @@ const LocationCheckIn = () => {
   const [checkInStatus, setCheckInStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const targetLocation = { lat: 6.5243793, lng: 3.3792057 };
-  const maxDistance = 100000;
+  const targetLocation = { lat: 10.504599, lng: 7.431029 };
+  const maxDistance = 900000;
 
   const generateToken = () => {
     return Math.random().toString(36).substr(2);
