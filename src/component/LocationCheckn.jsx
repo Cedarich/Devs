@@ -33,7 +33,7 @@ const LocationCheckIn = () => {
   };
 
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
-    const R = 6371e3; // Earth's radius in meters
+    const R = 6371e3;
     const φ1 = (lat1 * Math.PI) / 180;
     const φ2 = (lat2 * Math.PI) / 180;
     const Δφ = ((lat2 - lat1) * Math.PI) / 180;
@@ -44,7 +44,7 @@ const LocationCheckIn = () => {
       Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    return R * c; // in meters
+    return R * c;
   };
 
   const checkLocation = () => {
@@ -58,19 +58,12 @@ const LocationCheckIn = () => {
           const userLat = position.coords.latitude;
           const userLng = position.coords.longitude;
 
-          // Log current location for debugging
-          console.log("Current Location:", userLat, userLng);
-
-          // Calculate the distance from target location
           const distance = calculateDistance(
             userLat,
             userLng,
             targetLocation.lat,
             targetLocation.lng
           );
-
-          // Log calculated distance for debugging
-          console.log("Calculated Distance:", distance);
 
           if (distance <= maxDistance) {
             setCheckInStatus("success");
@@ -84,14 +77,9 @@ const LocationCheckIn = () => {
               storeTokenWithExpiration(token);
             }
 
-            // Inform user of success before redirection
-            setErrorMessage(
-              `You are within the allowed check-in area. Redirecting...`
-            );
-
             setTimeout(() => {
               window.location.href = `https://script.google.com/macros/s/AKfycbwRlfXX71ODCTwiCnuKFgZKOCmyg0c68UfXkgFNC59MxJT26e95-2BZ1-updBuSdzIduQ/exec?token=${token}`;
-            }, 2000); // Delay before redirection (2 seconds for example)
+            }, 1000);
           } else {
             setCheckInStatus("error");
             setErrorMessage(
@@ -114,9 +102,9 @@ const LocationCheckIn = () => {
 
   const handleModalClose = () => {
     if (checkInStatus === "error") {
-      window.location.reload(); // Refresh page if there's an error
+      window.location.reload(); // Refresh the page only on error state
     } else {
-      setModalVisible(false); // Close modal if success
+      setModalVisible(false); // Close modal if status is not error
       setCheckInStatus(null);
       setErrorMessage("");
     }
@@ -125,8 +113,20 @@ const LocationCheckIn = () => {
   useEffect(() => {
     const style = document.createElement("style");
     style.innerHTML = `
-      @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 255, 255, 0.6); } 50% { transform: scale(1.2); box-shadow: 0 0 20px rgba(255, 255, 255, 1); } 100% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 255, 255, 0.6); } }
-      @keyframes glow { 0% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.6), 0 0 10px rgba(255, 255, 255, 0.5); } 50% { text-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 25px rgba(255, 255, 255, 0.7); } 100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.6), 0 0 10px rgba(255, 255, 255, 0.5); } }
+      @keyframes pulse {
+        0% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 255, 255, 0.6); }
+        50% { transform: scale(1.2); box-shadow: 0 0 20px rgba(255, 255, 255, 1); }
+        100% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 255, 255, 0.6); }
+      }
+
+      @keyframes glow {
+        0% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.6), 0 0 10px rgba(255, 255, 255, 0.5); }
+        50% { text-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 25px rgba(255, 255, 255, 0.7); }
+        100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.6), 0 0 10px rgba(255, 255, 255, 0.5); }
+      }
+
+      @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+      @keyframes typing { 0% { width: 0; } 100% { width: 100%; } }
     `;
     document.head.appendChild(style);
 
@@ -169,10 +169,16 @@ const LocationCheckIn = () => {
       >
         <Title
           level={2}
+          className="location-check-title"
           style={{
             fontFamily: "'Poppins', sans-serif",
             fontSize: "1.5rem",
             color: "#e2aaff",
+            overflow: "hidden",
+            paddingRight: "10px",
+            whiteSpace: "nowrap",
+            animation:
+              "typing 4s steps(30) 1s 1 normal, blink 0.75s step-end infinite",
             textShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
           }}
         >
@@ -208,6 +214,15 @@ const LocationCheckIn = () => {
             padding: "12px 30px",
             boxShadow: "0 0 10px rgba(250, 172, 99, 0.5)",
             transition: "all 0.3s ease",
+            animation: "pulse 4s ease-out infinite",
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.transform = "scale(1.1)";
+            e.target.style.boxShadow = "0 0 25px rgba(250, 172, 99, 0.8)";
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.transform = "scale(1)";
+            e.target.style.boxShadow = "0 0 10px rgba(250, 172, 99, 0.5)";
           }}
         >
           Check In
