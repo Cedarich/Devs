@@ -12,7 +12,7 @@ const App = () => {
     // Display MatrixLoader for 1 second before showing LocationCheckIn
     const loaderTimeout = setTimeout(() => {
       setShowLocationCheckIn(true);
-    }, 3000);
+    }, 1900);
 
     return () => clearTimeout(loaderTimeout); // Clear timeout on component unmount
   }, []);
@@ -51,7 +51,11 @@ const App = () => {
   return (
     <div style={{ position: "relative", minHeight: "100vh" }}>
       {!showLocationCheckIn && <MatrixLoader />}
-      {showLocationCheckIn && <LocationCheckIn />}
+      {showLocationCheckIn && (
+        <div className="location-check-in-wrapper">
+          <LocationCheckIn />
+        </div>
+      )}
       {/* Always show the button */}
       <button
         style={{
@@ -85,6 +89,37 @@ const App = () => {
       >
         <DownloadOutlined /> {/* Use Ant Design's Download icon */}
       </button>
+
+      <style>{`
+        .location-check-in-wrapper {
+          opacity: 0;
+          transform: translateY(50px);
+          animation: fadeInUp 1s ease-out forwards, glowEffect 2s infinite alternate;
+        }
+
+        @keyframes fadeInUp {
+          0% {
+            opacity: 0;
+            transform: translateY(50px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes glowEffect {
+          0% {
+            text-shadow: 0 0 10px rgba(250, 172, 99, 0.6);
+          }
+          50% {
+            text-shadow: 0 0 20px rgba(250, 172, 99, 1);
+          }
+          100% {
+            text-shadow: 0 0 10px rgba(250, 172, 99, 0.6);
+          }
+        }
+      `}</style>
     </div>
   );
 };
