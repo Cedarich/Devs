@@ -419,57 +419,67 @@ const LocationCheckIn = () => {
   }
 }
 
-@keyframes glowEffect {
-  0% {
-    box-shadow: 0 0 10px rgba(250, 172, 99, 0.5), 0 0 20px rgba(250, 172, 99, 0.3);
+@keyframes glowText {
+    0% {
+      text-shadow: 0 0 10px rgba(0, 255, 204, 0.8), 0 0 20px rgba(0, 170, 255, 0.6), 0 0 30px rgba(255, 0, 255, 0.5);
+    }
+    50% {
+      text-shadow: 0 0 20px rgba(0, 255, 204, 1), 0 0 40px rgba(0, 170, 255, 0.7), 0 0 60px rgba(255, 0, 255, 0.8);
+    }
+    100% {
+      text-shadow: 0 0 10px rgba(0, 255, 204, 0.8), 0 0 20px rgba(0, 170, 255, 0.6), 0 0 30px rgba(255, 0, 255, 0.5);
+    }
   }
-  50% {
-    box-shadow: 0 0 20px rgba(250, 172, 99, 1), 0 0 30px rgba(250, 172, 99, 0.7);
-  }
-  100% {
-    box-shadow: 0 0 10px rgba(250, 172, 99, 0.5), 0 0 20px rgba(250, 172, 99, 0.3);
-  }
-}
+
+  @keyframes slideIn {
+    0% {
+      transform: translateY(30px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
 
 /* Modal Title - Glitch Effect */
 .ant-modal-title {
   animation: glitchEffect 1.5s infinite alternate;
 }
 
-@keyframes glitchEffect {
-  0% {
-    transform: skew(0.5deg);
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
-  }
-  25% {
-    transform: skew(-0.5deg);
-    opacity: 0.8;
-    clip-path: inset(10% 0 0 0);
-  }
-  50% {
-    transform: skew(0.5deg);
-    opacity: 1;
-    clip-path: inset(0 0 10% 0);
-  }
-  75% {
-    transform: skew(-0.5deg);
-    opacity: 0.8;
-    clip-path: inset(10% 10% 0 0);
-  }
-  100% {
-    transform: skew(0.5deg);
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
-  }
-}
+// @keyframes glitchEffect {
+//   0% {
+//     transform: skew(0.5deg);
+//     opacity: 1;
+//     clip-path: inset(0 0 0 0);
+//   }
+//   25% {
+//     transform: skew(-0.5deg);
+//     opacity: 0.8;
+//     clip-path: inset(10% 0 0 0);
+//   }
+//   50% {
+//     transform: skew(0.5deg);
+//     opacity: 1;
+//     clip-path: inset(0 0 10% 0);
+//   }
+//   75% {
+//     transform: skew(-0.5deg);
+//     opacity: 0.8;
+//     clip-path: inset(10% 10% 0 0);
+//   }
+//   100% {
+//     transform: skew(0.5deg);
+//     opacity: 1;
+//     clip-path: inset(0 0 0 0);
+//   }
+// }
 
-/* Button Animation */
-.ant-btn-primary:hover {
-  animation: pulseGlow 2s infinite, glow 1.5s ease-in-out infinite;
-  transform: scale(1.1);
-  box-shadow: 0 0 15px rgba(250, 172, 99, 0.7), 0 0 30px rgba(255, 165, 0, 0.5);
-}
+// /* Button Animation */
+// .ant-btn-primary:hover {
+//   animation: pulseGlow 2s infinite, glow 1.5s ease-in-out infinite;
+//   transform: scale(1.1);
+//   box-shadow: 0 0 15px rgba(250, 172, 99, 0.7), 0 0 30px rgba(255, 165, 0, 0.5);
+// }
 
 @keyframes pulseGlow {
   0% {
@@ -532,35 +542,44 @@ const LocationCheckIn = () => {
           style={{
             fontFamily: "'Pacifico', sans-serif",
             fontSize: "1.5rem",
-            color: "#e2aaff",
+            color: "#faac63", // Main color, harmonized with app color
             overflow: "hidden",
             paddingRight: "10px",
             whiteSpace: "nowrap",
             animation:
               "typing 4s steps(30) 1s 1 normal, blink 0.75s step-end infinite",
-            textShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+            textShadow:
+              "0 4px 8px rgba(0, 0, 0, 0.2), 0 0 30px rgba(250, 172, 99, 0.8), 0 0 10px rgba(250, 172, 99, 0.6)",
+            letterSpacing: "1px", // Adds spacing to enhance the futuristic feel
+            transform: "scale(1.05)", // Slight scaling for a modern effect
           }}
         >
           <EnvironmentOutlined
-            style={{ fontSize: "1.5rem", marginRight: "10px" }}
+            style={{
+              fontSize: "1.8rem", // Larger icon for Web3 feel
+              marginRight: "10px",
+              color: "#faac63", // Harmonized with text color
+            }}
           />
           Devs Check-In
         </Title>
 
         <Paragraph
           style={{
-            fontFamily: "'Poppins', sans-serif",
-            fontSize: "1.5rem", // Adjusted font size for better visibility
+            fontFamily: "'Orbitron', sans-serif", // Futuristic font
+            fontSize: "1.2rem", // Adjusted font size for better visibility
             color: "transparent",
-            background: "linear-gradient(90deg, #faac63, #ff5e5e, #42aaff)",
-            WebkitBackgroundClip: "text",
+            background: "linear-gradient(90deg, #42aaff, #ff5e5e, #f9a825)", // New gradient: bright blue, neon pink, and yellow
+            WebkitBackgroundClip: "text", // To apply gradient to the text only
             textAlign: "center",
             position: "relative",
-            // animation: "glowText 2s ease-in-out infinite", // Glow text animation
-            textShadow: "0 0 10px #faac63, 0 0 20px #ff5e5e, 0 0 30px #42aaff", // Glowing text effect
+            textShadow: "0 0 10px #42aaff, 0 0 20px #f9a825, 0 0 30px #ff5e5e", // Glowing text effect with new colors
+            letterSpacing: "2px", // Add spacing for a sleek feel
+            animation:
+              "glowText 1.5s ease-in-out infinite, slideIn 1s ease-out", // Glow and slide-in animation
           }}
         >
-          Please enable location access in your browser and check in to proceed
+          Please enable location access and check in to proceed
         </Paragraph>
         <Button
           type="primary"
@@ -589,27 +608,6 @@ const LocationCheckIn = () => {
           }
           open={modalVisible}
           onCancel={handleModalClose}
-          footer={[
-            <Button
-              key="back"
-              onClick={handleModalClose}
-              icon={
-                checkInStatus === "success" ? (
-                  <EnvironmentOutlined />
-                ) : (
-                  <CloseCircleOutlined />
-                )
-              }
-              style={{
-                backgroundColor:
-                  checkInStatus === "success" ? "#4CAF50" : "#f44336",
-                color: "white",
-                fontFamily: "'Poppins', sans-serif",
-              }}
-            >
-              {checkInStatus === "success" ? "" : "Try Again"}
-            </Button>,
-          ]}
         >
           {checkInStatus === "success" ? (
             <div>
