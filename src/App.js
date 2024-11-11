@@ -12,7 +12,7 @@ const App = () => {
     // Display MatrixLoader for 1 second before showing LocationCheckIn
     const loaderTimeout = setTimeout(() => {
       setShowLocationCheckIn(true);
-    }, 1900);
+    }, 2000);
 
     return () => clearTimeout(loaderTimeout); // Clear timeout on component unmount
   }, []);

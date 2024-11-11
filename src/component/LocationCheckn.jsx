@@ -521,19 +521,34 @@ const LocationCheckIn = () => {
     >
       <div
         style={{
-          background: "rgba(255, 255, 255, 0.1)",
-          border: "1px solid rgba(255, 255, 255, 0.2)",
-          borderRadius: "12px",
+          background:
+            "linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.1))",
+          border: "1px solid rgba(255, 255, 255, 0.3)",
+          borderRadius: "16px",
           padding: "30px",
           textAlign: "center",
-          boxShadow: "0 10px 30px rgba(0, 0, 0, 0.4)",
+          boxShadow:
+            "0 15px 40px rgba(0, 0, 0, 0.6), 0 0 10px #faac63, 0 0 20px rgba(255, 255, 255, 0.4)",
           zIndex: 2,
           maxWidth: "90%",
           width: "400px",
-          backdropFilter: "blur(8px)",
+          backdropFilter: "blur(15px) saturate(1.5)",
           color: "white",
           position: "relative",
           overflow: "hidden",
+          transition: "transform 0.3s ease, box-shadow 0.3s ease",
+          // animation: "pulse 2s infinite",
+          cursor: "pointer",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.05)";
+          e.currentTarget.style.boxShadow =
+            "0 20px 60px rgba(0, 0, 0, 0.8), 0 0 15px #faac63, 0 0 30px rgba(255, 255, 255, 0.6)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.boxShadow =
+            "0 15px 40px rgba(0, 0, 0, 0.6), 0 0 10px #faac63, 0 0 20px rgba(255, 255, 255, 0.4)";
         }}
       >
         <Title
