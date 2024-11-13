@@ -17,10 +17,10 @@ const MatrixLoader = () => {
         50% { text-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 25px rgba(255, 255, 255, 0.7); }
         100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.6), 0 0 10px rgba(255, 255, 255, 0.5); }
       }
-      @keyframes gradientShift { 
-        0% { background-position: 0% 50%; } 
-        50% { background-position: 100% 50%; } 
-        100% { background-position: 0% 50%; } 
+      @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
       }
     `;
     document.head.appendChild(style);

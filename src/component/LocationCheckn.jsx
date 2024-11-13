@@ -277,7 +277,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Button, Modal, Alert, Typography } from "antd";
-import { CloseCircleOutlined, EnvironmentOutlined } from "@ant-design/icons";
+import { EnvironmentOutlined } from "@ant-design/icons";
 
 const { Title, Paragraph } = Typography;
 
@@ -400,101 +400,8 @@ const LocationCheckIn = () => {
         100% { width: 100%; } 
       }
   
-      /* Modal Animation */
-.ant-modal {
-  animation: bounceIn 1s ease-out, glowEffect 2s infinite alternate;
-}
+     
 
-@keyframes bounceIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.8) translateY(-30px);
-  }
-  50% {
-    transform: scale(1.05) translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-@keyframes glowText {
-    0% {
-      text-shadow: 0 0 10px rgba(0, 255, 204, 0.8), 0 0 20px rgba(0, 170, 255, 0.6), 0 0 30px rgba(255, 0, 255, 0.5);
-    }
-    50% {
-      text-shadow: 0 0 20px rgba(0, 255, 204, 1), 0 0 40px rgba(0, 170, 255, 0.7), 0 0 60px rgba(255, 0, 255, 0.8);
-    }
-    100% {
-      text-shadow: 0 0 10px rgba(0, 255, 204, 0.8), 0 0 20px rgba(0, 170, 255, 0.6), 0 0 30px rgba(255, 0, 255, 0.5);
-    }
-  }
-
-  @keyframes slideIn {
-    0% {
-      transform: translateY(30px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-/* Modal Title - Glitch Effect */
-.ant-modal-title {
-  animation: glitchEffect 1.5s infinite alternate;
-}
-
-// @keyframes glitchEffect {
-//   0% {
-//     transform: skew(0.5deg);
-//     opacity: 1;
-//     clip-path: inset(0 0 0 0);
-//   }
-//   25% {
-//     transform: skew(-0.5deg);
-//     opacity: 0.8;
-//     clip-path: inset(10% 0 0 0);
-//   }
-//   50% {
-//     transform: skew(0.5deg);
-//     opacity: 1;
-//     clip-path: inset(0 0 10% 0);
-//   }
-//   75% {
-//     transform: skew(-0.5deg);
-//     opacity: 0.8;
-//     clip-path: inset(10% 10% 0 0);
-//   }
-//   100% {
-//     transform: skew(0.5deg);
-//     opacity: 1;
-//     clip-path: inset(0 0 0 0);
-//   }
-// }
-
-// /* Button Animation */
-// .ant-btn-primary:hover {
-//   animation: pulseGlow 2s infinite, glow 1.5s ease-in-out infinite;
-//   transform: scale(1.1);
-//   box-shadow: 0 0 15px rgba(250, 172, 99, 0.7), 0 0 30px rgba(255, 165, 0, 0.5);
-// }
-
-@keyframes pulseGlow {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 0 10px rgba(250, 172, 99, 0.5), 0 0 20px rgba(250, 172, 99, 0.3);
-  }
-  50% {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(250, 172, 99, 1), 0 0 30px rgba(250, 172, 99, 0.7);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 10px rgba(250, 172, 99, 0.5), 0 0 20px rgba(250, 172, 99, 0.3);
-  }
-}
 
     `;
     document.head.appendChild(style);
@@ -609,7 +516,7 @@ const LocationCheckIn = () => {
             padding: "12px 30px",
             boxShadow: "0 0 10px rgba(250, 172, 99, 0.5)",
             transition: "all 0.3s ease",
-            animation: "pulse 4s ease-out infinite",
+            animation: "pulse 2s ease-out infinite",
           }}
         >
           Check-In
