@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import LocationCheckIn from "./component/LocationCheckn";
 import "antd/dist/reset.css";
-import { DownloadOutlined } from "@ant-design/icons"; // Import the Ant Design download icon
-import MatrixLoader from "./component/MatrixLoader";
+import { DownloadOutlined } from "@ant-design/icons";
+import Loader from "./component/Loader";
 
 const App = () => {
   const [installPrompt, setInstallPrompt] = useState(null);
   const [showLocationCheckIn, setShowLocationCheckIn] = useState(false);
+  const [isInstalled, setIsInstalled] = useState(false);
 
   useEffect(() => {
     // Display MatrixLoader for 1 second before showing LocationCheckIn
@@ -34,12 +35,20 @@ const App = () => {
     };
   }, []);
 
+  useEffect(() => {
+    // Check if the app is already installed (using PWA install logic)
+    if (window.matchMedia("(display-mode: standalone)").matches) {
+      setIsInstalled(true);
+    }
+  }, []);
+
   const handleInstallClick = () => {
     if (installPrompt) {
       installPrompt.prompt(); // Show the install prompt
       installPrompt.userChoice.then((choiceResult) => {
         if (choiceResult.outcome === "accepted") {
           console.log("User accepted the install prompt");
+          setIsInstalled(true); // Mark the app as installed
         } else {
           console.log("User dismissed the install prompt");
         }
@@ -50,45 +59,48 @@ const App = () => {
 
   return (
     <div style={{ position: "relative", minHeight: "100vh" }}>
-      {!showLocationCheckIn && <MatrixLoader />}
+      {!showLocationCheckIn && <Loader />}
       {showLocationCheckIn && (
         <div className="location-check-in-wrapper">
           <LocationCheckIn />
         </div>
       )}
-      {/* Always show the button */}
-      <button
-        style={{
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
-          width: "80px",
-          height: "80px",
-          backgroundColor: "transparent",
-          color: "#faac63", // Set the icon color to match the desired style
-          border: "none",
-          borderRadius: "50%", // Make the button round
-          fontSize: "35px",
-          cursor: "pointer",
-          zIndex: 9999, // Ensure the button stays on top
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          boxShadow: "0 0 10px rgba(250, 172, 99, 0.5)", // Soft glowing effect
-          transition: "all 0.3s ease", // Smooth transition for animations
-        }}
-        onClick={handleInstallClick}
-        onMouseEnter={(e) => {
-          e.target.style.transform = "scale(1.1)"; // Slight zoom on hover
-          e.target.style.boxShadow = "0 0 25px rgba(250, 172, 99, 0.8)"; // Brighter glow on hover
-        }}
-        onMouseLeave={(e) => {
-          e.target.style.transform = "scale(1)"; // Reset zoom effect
-          e.target.style.boxShadow = "0 0 10px rgba(250, 172, 99, 0.5)"; // Reset glow
-        }}
-      >
-        <DownloadOutlined /> {/* Use Ant Design's Download icon */}
-      </button>
+
+      {/* Only show the install button if the app is not installed */}
+      {!isInstalled && (
+        <button
+          style={{
+            position: "fixed",
+            bottom: "20px",
+            right: "20px",
+            width: "80px",
+            height: "80px",
+            backgroundColor: "transparent",
+            color: "#faac63",
+            border: "none",
+            borderRadius: "50%",
+            fontSize: "35px",
+            cursor: "pointer",
+            zIndex: 9999,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            boxShadow: "0 0 10px rgba(250, 172, 99, 0.5)",
+            transition: "all 0.3s ease",
+          }}
+          onClick={handleInstallClick}
+          onMouseEnter={(e) => {
+            e.target.style.transform = "scale(1.1)";
+            e.target.style.boxShadow = "0 0 25px rgba(250, 172, 99, 0.8)";
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.transform = "scale(1)";
+            e.target.style.boxShadow = "0 0 10px rgba(250, 172, 99, 0.5)";
+          }}
+        >
+          <DownloadOutlined />
+        </button>
+      )}
 
       <style>{`
         .location-check-in-wrapper {
