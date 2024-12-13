@@ -273,22 +273,59 @@ const LocationCheckIn = () => {
           onCancel={handleModalClose}
         >
           {checkInStatus === "success" ? (
-            <div>
+            <div
+              style={{
+                background:
+                  "linear-gradient(120deg, #6a11cb, #2575fc, #ff0080, #40c9ff)", // Matching gradient colors
+                backgroundSize: "300% 300%", // Adjusting gradient size for smooth shifting
+                animation: "gradientShift 6s ease infinite", // Apply shifting animation
+                borderRadius: "15px", // Rounded corners for a sleek look
+                padding: "20px", // Add padding for spacing inside the div
+                boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)", // Soft shadow to add depth
+                maxWidth: "800px", // Limit the width for better design control
+                margin: "0 auto", // Center the div horizontally
+                transition: "all 0.3s ease", // Smooth transition for hover effects
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = "scale(1.03)"; // Slight zoom on hover
+                e.target.style.boxShadow = "0 8px 20px rgba(0, 0, 0, 0.2)"; // Stronger shadow on hover
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = "scale(1)"; // Reset zoom effect
+                e.target.style.boxShadow = "0 4px 15px rgba(0, 0, 0, 0.1)"; // Reset shadow
+              }}
+            >
               <Alert
-                message={
-                  <>
-                    You have successfully checked in, hold on for form to load!
-                  </>
-                }
+                message={<>You have successfully checked in, please wait...</>}
                 type="success"
                 showIcon
+                style={{
+                  marginBottom: "20px", // Space between the Alert and iframe
+                  fontSize: "16px", // Adjust font size for better readability
+                  backgroundColor: "#fff4e5", // Light background to highlight the Alert
+                  border: "1px solid #faac63", // Border matching the main color
+                }}
               />
               <iframe
                 src={`https://docs.google.com/forms/d/e/1FAIpQLSeATW3_EhfPFSXX8EfejVSgSH6lY_FYE8LIB85Dxv-U6GKIWw/viewform`}
                 width="100%"
                 height="400"
-                style={{ border: "none", marginTop: "20px" }}
+                style={{
+                  border: "none",
+                  borderRadius: "10px", // Rounded corners for the iframe
+                  boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)", // Subtle shadow on iframe
+                  marginTop: "20px",
+                  transition: "all 0.3s ease", // Smooth transition for hover effect
+                }}
                 title="Devs Attendance"
+                onMouseEnter={(e) => {
+                  e.target.style.transform = "scale(1.03)"; // Slight zoom on hover
+                  e.target.style.boxShadow = "0 8px 20px rgba(0, 0, 0, 0.2)"; // Stronger shadow on hover
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.transform = "scale(1)"; // Reset zoom effect
+                  e.target.style.boxShadow = "0 4px 15px rgba(0, 0, 0, 0.1)"; // Reset shadow
+                }}
               />
             </div>
           ) : (
