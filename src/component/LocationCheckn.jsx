@@ -307,7 +307,7 @@ const LocationCheckIn = () => {
                 }}
               />
               <iframe
-                src={`https://docs.google.com/forms/d/e/1FAIpQLSeATW3_EhfPFSXX8EfejVSgSH6lY_FYE8LIB85Dxv-U6GKIWw/viewform`}
+                src={`https://forms.gle/hrHPGsz73v7uCgoD6`}
                 width="100%"
                 height="400"
                 style={{
