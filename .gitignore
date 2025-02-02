@@ -21,3 +21,13 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+echo "
+# Firebase
+.firebase/
+firebase-debug.log
+dataconnect/
+
+# Environment
+.env
+" >> .gitignore

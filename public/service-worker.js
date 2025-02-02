@@ -1,3 +1,4 @@
+/* eslint-env serviceworker */
 // The files that should be cached
 const CACHE_NAME = "my-cache-v1";
 const ASSETS_TO_CACHE = [
@@ -37,6 +38,26 @@ self.addEventListener("activate", (event) => {
 
 // Fetch: Serve cached assets when offline
 self.addEventListener("fetch", (event) => {
+  const url = new URL(event.request.url);
+  if (url.hostname === 'firestore.googleapis.com') {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+  if (url.pathname.includes('/google.firestore.') || 
+      url.pathname.includes('/Listen/') ||
+      url.hostname.endsWith('.googleapis.com')) {
+    return fetch(event.request);
+  }
+  if (url.hostname.endsWith('.googleapis.com') || 
+      url.pathname.startsWith('/v1/projects/')) {
+    return fetch(event.request);
+  }
+  if (url.hostname.includes('firestore') || 
+      url.hostname.includes('identitytoolkit') ||
+      url.pathname.includes('/google.firestore.') || 
+      url.pathname.includes('/v1/accounts:')) {
+    return fetch(event.request);
+  }
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) {

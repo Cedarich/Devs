@@ -70,7 +70,10 @@ const AttendanceForm = () => {
 
         // Update user document atomically
         const updatedSubmissions = [...existingSubmissions, { date: today }];
-        transaction.update(userDocRef, { submissions: updatedSubmissions });
+        transaction.set(userDocRef, 
+          { submissions: updatedSubmissions }, 
+          { merge: true } // Merges with existing doc instead of overwriting
+        );
       });
 
       setSubmitProgress(70);
