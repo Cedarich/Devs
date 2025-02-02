@@ -18,6 +18,12 @@
       rel="apple-touch-icon"
       href="%PUBLIC_URL%/icon.svg"
     />
+    <!-- Add PNG fallback -->
+    <link
+      rel="apple-touch-icon"
+      href="%PUBLIC_URL%/thumbnail.png"
+      sizes="512x512"
+    />
 
     <!-- Android Chrome Icons -->
     <link
@@ -29,6 +35,18 @@
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <!-- Social Media Preview -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://attendance-cd60e.web.app" />
+    <meta property="og:title" content="Devs 2.0 Attendance System" />
+    <meta property="og:description" content="Secure developer attendance tracking with real-time updates" />
+    <meta property="og:image" content="%PUBLIC_URL%/thumbnail.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Devs 2.0 Attendance System" />
+    <meta name="twitter:description" content="Secure developer attendance tracking with real-time updates" />
+    <meta name="twitter:image" content="%PUBLIC_URL%/thumbnail.png" />
 
     <title>Attendance App</title>
     <!-- Update title if necessary -->
