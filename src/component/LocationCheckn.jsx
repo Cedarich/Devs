@@ -148,28 +148,11 @@ const LocationCheckIn = () => {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
-        background:
-          "linear-gradient(120deg, #6a11cb, #2575fc, #ff0080, #40c9ff)",
-        backgroundSize: "300% 300%",
-        animation: "gradientShift 6s ease infinite",
         position: "relative",
-        overflow: "hidden",
+        zIndex: 2,
+        backdropFilter: "blur(10px)",
       }}
     >
-      {/* Lightning Effects */}
-      <div
-        style={{
-          position: "absolute",
-          width: "100%",
-          height: "100%",
-          backgroundImage: `
-            radial-gradient(circle at 20% 20%, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%), 
-            radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 50%)`,
-          mixBlendMode: "screen",
-          animation: "lightningMove 4s infinite",
-        }}
-      ></div>
-
       <div
         style={{
           background:
@@ -250,14 +233,15 @@ const LocationCheckIn = () => {
           onClick={checkLocation}
           icon={<EnvironmentOutlined />}
           style={{
-            fontFamily: "'Pacifico', sans-serif",
-            background: "transparent",
-            color: "#fffff",
-            border: "none",
-            padding: "12px 30px",
-            boxShadow: "0 0 10px rgba(250, 172, 99, 0.5)",
+            background: "linear-gradient(135deg, rgba(90, 200, 250, 0.2), rgba(150, 120, 250, 0.2))",
+            border: "1px solid rgba(255, 255, 255, 0.15)",
+            color: "#fff",
+            padding: "15px 40px",
+            borderRadius: "12px",
+            fontSize: "1.2rem",
+            backdropFilter: "blur(8px)",
             transition: "all 0.3s ease",
-            animation: "pulse 2s ease-out infinite",
+            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
           }}
         >
           Check-In
@@ -275,24 +259,24 @@ const LocationCheckIn = () => {
           {checkInStatus === "success" ? (
             <div
               style={{
-                background:
-                  "linear-gradient(120deg, #6a11cb, #2575fc, #ff0080, #40c9ff)", // Matching gradient colors
-                backgroundSize: "300% 300%", // Adjusting gradient size for smooth shifting
-                animation: "gradientShift 6s ease infinite", // Apply shifting animation
-                borderRadius: "15px", // Rounded corners for a sleek look
-                padding: "20px", // Add padding for spacing inside the div
-                boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)", // Soft shadow to add depth
-                maxWidth: "800px", // Limit the width for better design control
-                margin: "0 auto", // Center the div horizontally
-                transition: "all 0.3s ease", // Smooth transition for hover effects
+                background: "rgba(10, 10, 30, 0.85)",
+                backdropFilter: "blur(12px) saturate(180%)",
+                borderRadius: "15px",
+                padding: "20px",
+                boxShadow: "0 0 50px rgba(255, 255, 255, 0.1)",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
+                position: "relative",
+                overflow: "hidden",
+                transform: "scale(1)",
+                transition: "all 0.3s ease",
               }}
               onMouseEnter={(e) => {
-                e.target.style.transform = "scale(1.03)"; // Slight zoom on hover
-                e.target.style.boxShadow = "0 8px 20px rgba(0, 0, 0, 0.2)"; // Stronger shadow on hover
+                e.target.style.transform = "scale(1.03)";
+                e.target.style.boxShadow = "0 8px 20px rgba(0, 0, 0, 0.2)";
               }}
               onMouseLeave={(e) => {
-                e.target.style.transform = "scale(1)"; // Reset zoom effect
-                e.target.style.boxShadow = "0 4px 15px rgba(0, 0, 0, 0.1)"; // Reset shadow
+                e.target.style.transform = "scale(1)";
+                e.target.style.boxShadow = "0 4px 15px rgba(0, 0, 0, 0.1)";
               }}
             >
               <Alert
@@ -300,10 +284,10 @@ const LocationCheckIn = () => {
                 type="success"
                 showIcon
                 style={{
-                  marginBottom: "20px", // Space between the Alert and iframe
-                  fontSize: "16px", // Adjust font size for better readability
-                  backgroundColor: "#fff4e5", // Light background to highlight the Alert
-                  border: "1px solid #faac63", // Border matching the main color
+                  marginBottom: "20px",
+                  fontSize: "16px",
+                  backgroundColor: "#fff4e5",
+                  border: "1px solid #faac63",
                 }}
               />
               <iframe
@@ -312,19 +296,19 @@ const LocationCheckIn = () => {
                 height="400"
                 style={{
                   border: "none",
-                  borderRadius: "10px", // Rounded corners for the iframe
-                  boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)", // Subtle shadow on iframe
+                  borderRadius: "10px",
+                  boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)",
                   marginTop: "20px",
-                  transition: "all 0.3s ease", // Smooth transition for hover effect
+                  transition: "all 0.3s ease",
                 }}
                 title="Devs Attendance"
                 onMouseEnter={(e) => {
-                  e.target.style.transform = "scale(1.03)"; // Slight zoom on hover
-                  e.target.style.boxShadow = "0 8px 20px rgba(0, 0, 0, 0.2)"; // Stronger shadow on hover
+                  e.target.style.transform = "scale(1.03)";
+                  e.target.style.boxShadow = "0 8px 20px rgba(0, 0, 0, 0.2)";
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.transform = "scale(1)"; // Reset zoom effect
-                  e.target.style.boxShadow = "0 4px 15px rgba(0, 0, 0, 0.1)"; // Reset shadow
+                  e.target.style.transform = "scale(1)";
+                  e.target.style.boxShadow = "0 4px 15px rgba(0, 0, 0, 0.1)";
                 }}
               />
             </div>

@@ -1,20 +1,16 @@
 {
-  "short_name": "Devs",
-  "name": "Devs",
+  "short_name": "Devs 2.0",
+  "name": "Devs 2.0",
   "icons": [
     {
-      "src": "icon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "src": "icon.svg",
+      "sizes": "48x48 72x72 96x96 128x128 256x256",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#fff",
-  "theme_color": "#fff"
+  "background_color": "#0a0a1a",
+  "theme_color": "#181a30"
 }
