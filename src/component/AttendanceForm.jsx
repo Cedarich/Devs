@@ -130,6 +130,10 @@ const AttendanceForm = () => {
     transition: 'all 0.3s ease',
   
     backgroundClip: 'padding-box, border-box',
+    '@media (max-width: 600px)': {
+      width: '100%',
+      minWidth: 'unset'
+    }
   };
 
   const labelStyle = { 
@@ -345,14 +349,15 @@ style={{
         layout="vertical"
         scrollToFirstError
       >
-        <div style={{ display: 'flex', gap: '16px' }}>
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
           <Form.Item
             name="firstName"
             label={<span style={labelStyle}>FIRST NAME</span>}
             rules={[{ required: true, message: 'First name is required' }]}
+            style={{ flex: 1, minWidth: '200px' }}
           >
             <Input 
-              style={inputStyle}
+              style={{ ...inputStyle, width: '100%' }}
               prefix={<UserOutlined />}
             />
           </Form.Item>
@@ -361,9 +366,10 @@ style={{
             name="lastName"
             label={<span style={labelStyle}>LAST NAME</span>}
             rules={[{ required: true, message: 'Last name is required' }]}
+            style={{ flex: 1, minWidth: '200px' }}
           >
             <Input 
-              style={inputStyle}
+              style={{ ...inputStyle, width: '100%' }}
               prefix={<UserOutlined />}
             />
           </Form.Item>
