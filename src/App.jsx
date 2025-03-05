@@ -7,13 +7,13 @@ import { useStore } from "./store/store.ts";
 import { motion } from "framer-motion";
 
 const App = () => {
-  const { 
+  const {
     installPrompt,
     isInstalled,
     showLocationCheckIn,
     setInstallPrompt,
     setIsInstalled,
-    setShowLocationCheckIn
+    setShowLocationCheckIn,
   } = useStore();
 
   useEffect(() => {
@@ -64,58 +64,55 @@ const App = () => {
     }
   };
 
-  useEffect(() => {
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      // Store the event to trigger later
-      const deferredPrompt = e;
-      // Show install button logic here
-    });
-  }, []);
+  // Remove the duplicate useEffect that creates the unused deferredPrompt variable
+  // This effect is redundant since we already have a similar one above
 
   return (
-    <div className="main-container" style={{ 
-      position: "relative", 
-      minHeight: "100vh", 
-      overflow: "hidden",
-      background: "#0a0a1a" // Dark space-like background
-    }}>
+    <div
+      className="main-container"
+      style={{
+        position: "relative",
+        minHeight: "100vh",
+        overflow: "hidden",
+        background: "#0a0a1a", // Dark space-like background
+      }}
+    >
       {/* Snowfall Container */}
-      <div 
+      <div
         style={{
-          position: 'fixed',
+          position: "fixed",
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
-          pointerEvents: 'none',
-          zIndex: 0
+          pointerEvents: "none",
+          zIndex: 0,
         }}
       >
         {[...Array(50)].map((_, i) => (
           <motion.div
             key={i}
             style={{
-              position: 'absolute',
-              background: 'rgba(255, 255, 255, 0.3)',
+              position: "absolute",
+              background: "rgba(255, 255, 255, 0.3)",
               width: `${Math.random() * 6 + 2}px`,
               height: `${Math.random() * 6 + 2}px`,
-              borderRadius: '50%',
-              filter: 'blur(2px)',
+              borderRadius: "50%",
+              filter: "blur(2px)",
               left: `${Math.random() * 100}%`,
-              top: '-10%'
+              top: "-10%",
             }}
             animate={{
-              y: '120vh',
+              y: "120vh",
               opacity: [0, 0.8, 0],
               rotate: Math.random() * 360,
-              x: `${Math.random() * 20 - 10}%`
+              x: `${Math.random() * 20 - 10}%`,
             }}
             transition={{
               duration: Math.random() * 10 + 8,
               repeat: Infinity,
               delay: Math.random() * 3,
-              ease: 'linear'
+              ease: "linear",
             }}
           />
         ))}
@@ -134,10 +131,10 @@ const App = () => {
           onClick={handleInstallClick}
           style={{
             position: "fixed",
-            bottom: '2vmin',
-            right: '2vmin',
-            width: 'clamp(60px, 12vw, 80px)',
-            height: 'clamp(60px, 12vw, 80px)',
+            bottom: "2vmin",
+            right: "2vmin",
+            width: "clamp(60px, 12vw, 80px)",
+            height: "clamp(60px, 12vw, 80px)",
             background: `
               radial-gradient(
                 circle at 75% 30%,
@@ -146,8 +143,8 @@ const App = () => {
               ),
               rgba(24,26,48,0.6)
             `,
-            backdropFilter: 'blur(12px)',
-            border: '1px solid rgba(64,169,255,0.3)',
+            backdropFilter: "blur(12px)",
+            border: "1px solid rgba(64,169,255,0.3)",
             borderRadius: "50%",
             cursor: "pointer",
             zIndex: 9999,
@@ -159,7 +156,7 @@ const App = () => {
               0 0 15px rgba(255,56,100,0.2),
               inset 0 0 10px rgba(255,255,255,0.1)
             `,
-            transform: 'translateZ(0)'
+            transform: "translateZ(0)",
           }}
           whileHover={{
             scale: 1.1,
@@ -168,26 +165,26 @@ const App = () => {
               0 0 25px rgba(255,56,100,0.3),
               inset 0 0 15px rgba(255,255,255,0.2)
             `,
-            transition: { duration: 0.3 }
+            transition: { duration: 0.3 },
           }}
-          whileTap={{ 
+          whileTap={{
             scale: 0.95,
             boxShadow: `
               0 0 15px rgba(64,169,255,0.2),
               inset 0 0 5px rgba(255,255,255,0.1)
-            `
+            `,
           }}
-          transition={{ 
+          transition={{
             type: "spring",
             stiffness: 300,
-            damping: 20
+            damping: 20,
           }}
         >
-          <DownloadOutlined 
+          <DownloadOutlined
             style={{
-              color: '#a2d5ff',
-              fontSize: 'clamp(1.5rem, 4vw, 2rem)',
-              filter: 'drop-shadow(0 0 8px rgba(64,169,255,0.5))'
+              color: "#a2d5ff",
+              fontSize: "clamp(1.5rem, 4vw, 2rem)",
+              filter: "drop-shadow(0 0 8px rgba(64,169,255,0.5))",
             }}
           />
         </motion.button>
