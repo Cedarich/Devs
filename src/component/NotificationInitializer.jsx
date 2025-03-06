@@ -67,14 +67,6 @@ const NotificationInitializer = () => {
       ) {
         Notification.requestPermission();
       }
-
-      // For development, show a test notification after a short delay
-      const timer = setTimeout(() => {
-        console.log("Attempting to show notification...");
-        notificationService.testNotification();
-      }, 5000);
-
-      return () => clearTimeout(timer);
     }
   }, []);
   // Effect to organize user data when user is available

@@ -97,8 +97,8 @@ export const notificationService = {
 
       // All conditions met, show notification
       this.showBrowserNotification(
-        "Attendance Reminder",
-        "Please remember to submit your attendance for today."
+        "Attendance Reminder 🔔",
+        "Please submit your attendance for today."
       );
 
       // Mark as notified for today
