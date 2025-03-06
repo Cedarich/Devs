@@ -5,6 +5,7 @@ import { DownloadOutlined } from "@ant-design/icons";
 import Loader from "./component/Loader";
 import { useStore } from "./store/store.ts";
 import { motion } from "framer-motion";
+import NotificationInitializer from "./component/NotificationInitializer";
 
 const App = () => {
   const {
@@ -77,6 +78,9 @@ const App = () => {
         background: "#0a0a1a", // Dark space-like background
       }}
     >
+      {/* Add NotificationInitializer component */}
+      <NotificationInitializer />
+
       {/* Snowfall Container */}
       <div
         style={{

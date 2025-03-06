@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -14,10 +14,7 @@
     <!-- Update description if needed -->
 
     <!-- Apple Touch Icon -->
-    <link
-      rel="apple-touch-icon"
-      href="%PUBLIC_URL%/icon.svg"
-    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/icon.svg" />
     <!-- Add PNG fallback -->
     <link
       rel="apple-touch-icon"
@@ -40,12 +37,18 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://attendance-cd60e.web.app" />
     <meta property="og:title" content="Devs 2.0 Attendance System" />
-    <meta property="og:description" content="Secure developer attendance tracking with real-time updates" />
+    <meta
+      property="og:description"
+      content="Secure developer attendance tracking with real-time updates"
+    />
     <meta property="og:image" content="%PUBLIC_URL%/thumbnail.png" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Devs 2.0 Attendance System" />
-    <meta name="twitter:description" content="Secure developer attendance tracking with real-time updates" />
+    <meta
+      name="twitter:description"
+      content="Secure developer attendance tracking with real-time updates"
+    />
     <meta name="twitter:image" content="%PUBLIC_URL%/thumbnail.png" />
 
     <title>Attendance App</title>
@@ -54,5 +57,77 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <!-- Add this script before the closing body tag -->
+    <script>
+      // Register the service worker
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then((registration) => {
+              console.log(
+                "Service Worker registered with scope:",
+                registration.scope
+              );
+
+              // Request notification permission
+              if ("Notification" in window) {
+                Notification.requestPermission().then((permission) => {
+                  console.log("Notification permission:", permission);
+
+                  // If permission is granted, schedule a notification
+                  if (permission === "granted") {
+                    // Check if it's a weekday
+                    const today = new Date();
+                    const day = today.getDay();
+                    if (day >= 1 && day <= 5) {
+                      // Monday to Friday
+                      // Schedule a notification for 9 AM if it's before 9 AM
+                      const hour = today.getHours();
+                      if (hour < 9) {
+                        const notificationTime = new Date();
+                        notificationTime.setHours(9, 0, 0, 0);
+                        const timeUntilNotification =
+                          notificationTime.getTime() - today.getTime();
+
+                        setTimeout(() => {
+                          registration.showNotification("Attendance Reminder", {
+                            body: "Hello dev, you haven't taken today's attendance.",
+                            icon: "/logo192.png",
+                            badge: "/logo192.png",
+                            tag: "attendance-reminder",
+                            requireInteraction: true,
+                            data: {
+                              url: window.location.origin,
+                              timestamp: new Date().getTime(),
+                            },
+                          });
+                        }, timeUntilNotification);
+                      } else if (hour < 17) {
+                        // Before 5 PM
+                        // Show notification immediately if it's during work hours
+                        registration.showNotification("Attendance Reminder", {
+                          body: "Hello dev, you haven't taken today's attendance.",
+                          icon: "/logo192.png",
+                          badge: "/logo192.png",
+                          tag: "attendance-reminder",
+                          requireInteraction: true,
+                          data: {
+                            url: window.location.origin,
+                            timestamp: new Date().getTime(),
+                          },
+                        });
+                      }
+                    }
+                  }
+                });
+              }
+            })
+            .catch((error) => {
+              console.error("Service Worker registration failed:", error);
+            });
+        });
+      }
+    </script>
   </body>
 </html>

@@ -11,6 +11,11 @@ service cloud.firestore {
       allow read, write: if true;
     }
     
+    // Allow read/write access to notifications collection
+    match /notifications/{userId} {
+      allow read, write: if true;
+    }
+    
     // Default deny rule
     match /{document=**} {
       allow read, write: if false;

@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 interface StoreState {
   // From store.js
@@ -7,10 +7,14 @@ interface StoreState {
   showLocationCheckIn: boolean;
   loading: boolean;
   user: any;
-  
+
   // From store.ts
   submitProgress: number;
   showGuide: boolean;
+
+  // New notification state
+  lastNotificationDate: string | null;
+  notificationsEnabled: boolean;
 
   // Action functions
   setInstallPrompt: (prompt: any) => void;
@@ -20,6 +24,8 @@ interface StoreState {
   setUser: (user: any) => void;
   setSubmitProgress: (progress: number) => void;
   setShowGuide: (show: boolean) => void;
+  setLastNotificationDate: (date: string | null) => void;
+  setNotificationsEnabled: (enabled: boolean) => void;
 }
 
 export const useStore = create<StoreState>((set) => ({
@@ -31,7 +37,8 @@ export const useStore = create<StoreState>((set) => ({
   user: null,
   submitProgress: 0,
   showGuide: true,
-
+  lastNotificationDate: null,
+  notificationsEnabled: false,
   // Action implementations
   setInstallPrompt: (prompt) => set({ installPrompt: prompt }),
   setIsInstalled: (installed) => set({ isInstalled: installed }),
@@ -39,5 +46,9 @@ export const useStore = create<StoreState>((set) => ({
   setLoading: (loading) => set({ loading }),
   setUser: (user) => set({ user }),
   setSubmitProgress: (submitProgress) => set({ submitProgress }),
-  setShowGuide: (showGuide) => set({ showGuide })
-})); 
+  setShowGuide: (showGuide) => set({ showGuide }),
+  setLastNotificationDate: (lastNotificationDate) =>
+    set({ lastNotificationDate }),
+  setNotificationsEnabled: (notificationsEnabled) =>
+    set({ notificationsEnabled }),
+}));
